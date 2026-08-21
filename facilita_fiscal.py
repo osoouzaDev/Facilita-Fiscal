@@ -41,10 +41,261 @@ from renomeador_pdfs import (
 APP_TITLE = "Facilita Fiscal - Renomeador de PDFs"
 ProgressCallback = Callable[[int, int, str], None]
 
+APP_BACKGROUND = "#EEF3F9"
+HEADER_BACKGROUND = "#071B3D"
+HEADER_CARD = "#102A52"
+SURFACE = "#FFFFFF"
+SURFACE_MUTED = "#F7F9FC"
+NAVY = "#12305A"
+TEXT = "#1D2B3F"
+TEXT_MUTED = "#637188"
+BLUE = "#1557D5"
+BLUE_DARK = "#0D43AE"
+BLUE_LIGHT = "#E8F1FF"
+GREEN = "#169B62"
+GREEN_DARK = "#0E7A4B"
+GREEN_LIGHT = "#EAF8F1"
+BORDER = "#D8E1EC"
+ERROR = "#B42318"
+ERROR_LIGHT = "#FFF1F0"
+
 
 def resource_path(relative_path: str) -> Path:
     base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
     return base / relative_path
+
+
+def configure_visual_styles(root: tk.Tk) -> None:
+    style = ttk.Style(root)
+    if "clam" in style.theme_names():
+        style.theme_use("clam")
+
+    style.configure(".", font=("Segoe UI", 10), foreground=TEXT)
+    style.configure("App.TFrame", background=APP_BACKGROUND)
+    style.configure("Workspace.TFrame", background=APP_BACKGROUND)
+    style.configure(
+        "Card.TFrame",
+        background=SURFACE,
+        bordercolor=BORDER,
+        borderwidth=1,
+        relief="solid",
+    )
+    style.configure("CardInner.TFrame", background=SURFACE)
+
+    style.configure(
+        "HeroEyebrow.TLabel",
+        background=BLUE_LIGHT,
+        foreground=BLUE,
+        font=("Segoe UI", 9, "bold"),
+        padding=(10, 5),
+    )
+    style.configure(
+        "HeroTitle.TLabel",
+        background=SURFACE,
+        foreground=NAVY,
+        font=("Segoe UI", 18, "bold"),
+    )
+    style.configure(
+        "HeroDescription.TLabel",
+        background=SURFACE,
+        foreground=TEXT_MUTED,
+        font=("Segoe UI", 10),
+    )
+    style.configure(
+        "SectionTitle.TLabel",
+        background=SURFACE,
+        foreground=TEXT,
+        font=("Segoe UI", 11, "bold"),
+    )
+    style.configure(
+        "Caption.TLabel",
+        background=SURFACE,
+        foreground=TEXT_MUTED,
+        font=("Segoe UI", 9),
+    )
+    style.configure(
+        "StatusDot.TLabel",
+        background=SURFACE,
+        foreground=GREEN,
+        font=("Segoe UI", 12, "bold"),
+    )
+    style.configure(
+        "Status.TLabel",
+        background=SURFACE,
+        foreground=TEXT_MUTED,
+        font=("Segoe UI", 9),
+    )
+
+    style.configure(
+        "Modern.TEntry",
+        fieldbackground=SURFACE_MUTED,
+        foreground=TEXT,
+        bordercolor=BORDER,
+        lightcolor=BORDER,
+        darkcolor=BORDER,
+        insertcolor=BLUE,
+        padding=(10, 9),
+    )
+    style.map(
+        "Modern.TEntry",
+        bordercolor=[("focus", BLUE)],
+        lightcolor=[("focus", BLUE)],
+        darkcolor=[("focus", BLUE)],
+    )
+
+    button_common = {
+        "font": ("Segoe UI", 9, "bold"),
+        "padding": (14, 9),
+        "borderwidth": 1,
+        "relief": "flat",
+    }
+    style.configure(
+        "Primary.TButton",
+        **button_common,
+        background=BLUE,
+        foreground="#FFFFFF",
+        bordercolor=BLUE,
+        lightcolor=BLUE,
+        darkcolor=BLUE,
+    )
+    style.map(
+        "Primary.TButton",
+        background=[
+            ("disabled", "#D9E1EC"),
+            ("pressed", BLUE_DARK),
+            ("active", BLUE_DARK),
+        ],
+        bordercolor=[
+            ("disabled", "#D9E1EC"),
+            ("pressed", BLUE_DARK),
+            ("active", BLUE_DARK),
+        ],
+        foreground=[("disabled", "#A8B3C3"), ("!disabled", "#FFFFFF")],
+    )
+    style.configure(
+        "Secondary.TButton",
+        **button_common,
+        background=SURFACE,
+        foreground=BLUE,
+        bordercolor="#B9C9E2",
+        lightcolor="#B9C9E2",
+        darkcolor="#B9C9E2",
+    )
+    style.map(
+        "Secondary.TButton",
+        background=[
+            ("disabled", "#F1F4F8"),
+            ("pressed", BLUE_LIGHT),
+            ("active", BLUE_LIGHT),
+        ],
+        bordercolor=[
+            ("disabled", "#D9E1EC"),
+            ("pressed", BLUE),
+            ("active", BLUE),
+        ],
+        foreground=[("disabled", "#A8B3C3"), ("!disabled", BLUE)],
+    )
+    style.configure(
+        "Success.TButton",
+        **button_common,
+        background=GREEN,
+        foreground="#FFFFFF",
+        bordercolor=GREEN,
+        lightcolor=GREEN,
+        darkcolor=GREEN,
+    )
+    style.map(
+        "Success.TButton",
+        background=[
+            ("disabled", "#D9E1EC"),
+            ("pressed", GREEN_DARK),
+            ("active", GREEN_DARK),
+        ],
+        bordercolor=[
+            ("disabled", "#D9E1EC"),
+            ("pressed", GREEN_DARK),
+            ("active", GREEN_DARK),
+        ],
+        foreground=[("disabled", "#A8B3C3"), ("!disabled", "#FFFFFF")],
+    )
+
+    style.configure(
+        "App.TNotebook",
+        background=APP_BACKGROUND,
+        borderwidth=0,
+        tabmargins=(0, 0, 0, 0),
+    )
+    style.configure(
+        "App.TNotebook.Tab",
+        background="#DFE7F2",
+        foreground=TEXT_MUTED,
+        padding=(22, 11),
+        font=("Segoe UI", 10, "bold"),
+        borderwidth=0,
+    )
+    style.map(
+        "App.TNotebook.Tab",
+        background=[("selected", SURFACE), ("active", BLUE_LIGHT)],
+        foreground=[("selected", BLUE), ("active", BLUE_DARK)],
+        padding=[("selected", (22, 12))],
+    )
+
+    style.configure(
+        "Modern.Treeview",
+        background=SURFACE,
+        fieldbackground=SURFACE,
+        foreground=TEXT,
+        bordercolor=BORDER,
+        lightcolor=BORDER,
+        darkcolor=BORDER,
+        borderwidth=0,
+        rowheight=32,
+        font=("Segoe UI", 9),
+    )
+    style.map(
+        "Modern.Treeview",
+        background=[("selected", "#DCEAFF")],
+        foreground=[("selected", NAVY)],
+    )
+    style.configure(
+        "Modern.Treeview.Heading",
+        background="#E8EEF7",
+        foreground=NAVY,
+        bordercolor=BORDER,
+        lightcolor=BORDER,
+        darkcolor=BORDER,
+        padding=(9, 9),
+        relief="flat",
+        font=("Segoe UI", 9, "bold"),
+    )
+    style.map(
+        "Modern.Treeview.Heading",
+        background=[("active", "#DCE7F5")],
+        foreground=[("active", BLUE_DARK)],
+    )
+    style.configure(
+        "Modern.Vertical.TScrollbar",
+        background="#C4D0E0",
+        troughcolor=SURFACE,
+        bordercolor=SURFACE,
+        arrowcolor=TEXT_MUTED,
+    )
+    style.configure(
+        "Modern.Horizontal.TScrollbar",
+        background="#C4D0E0",
+        troughcolor=SURFACE,
+        bordercolor=SURFACE,
+        arrowcolor=TEXT_MUTED,
+    )
+    style.configure(
+        "Modern.Horizontal.TProgressbar",
+        troughcolor="#DFE7F1",
+        background=GREEN,
+        bordercolor="#DFE7F1",
+        lightcolor=GREEN,
+        darkcolor=GREEN,
+        thickness=8,
+    )
 
 
 @dataclass(frozen=True)
@@ -310,81 +561,161 @@ class ServicePanel(ttk.Frame):
         parent: ttk.Notebook,
         title: str,
         description: str,
+        category: str,
         columns: tuple[str, ...],
         headings: dict[str, str],
         widths: dict[str, int],
     ) -> None:
-        super().__init__(parent, padding=12)
+        super().__init__(
+            parent,
+            padding=(18, 16, 18, 18),
+            style="Workspace.TFrame",
+        )
         self.analysis: object | None = None
         self.source_var = tk.StringVar(value="")
         self.status_var = tk.StringVar(
             value="Escolha um ZIP ou uma pasta que contenha os PDFs."
         )
         self.progress_value = tk.DoubleVar(value=0)
-        self._build_ui(title, description, columns, headings, widths)
+        self._build_ui(title, description, category, columns, headings, widths)
 
     def _build_ui(
         self,
         title: str,
         description: str,
+        category: str,
         columns: tuple[str, ...],
         headings: dict[str, str],
         widths: dict[str, int],
     ) -> None:
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(4, weight=1)
+        self.rowconfigure(2, weight=1)
 
-        ttk.Label(self, text=title, font=("Segoe UI", 15, "bold")).grid(
-            row=0, column=0, sticky="w"
-        )
-        ttk.Label(self, text=description).grid(
-            row=1, column=0, sticky="w", pady=(4, 12)
-        )
+        intro = ttk.Frame(self, padding=(18, 14), style="Card.TFrame")
+        intro.grid(row=0, column=0, sticky="ew", pady=(0, 12))
+        intro.columnconfigure(0, weight=1)
+        ttk.Label(
+            intro,
+            text=category.upper(),
+            style="HeroEyebrow.TLabel",
+        ).grid(row=0, column=0, sticky="w")
+        ttk.Label(
+            intro,
+            text=title,
+            style="HeroTitle.TLabel",
+        ).grid(row=1, column=0, sticky="w", pady=(9, 2))
+        ttk.Label(
+            intro,
+            text=description,
+            style="HeroDescription.TLabel",
+            wraplength=1020,
+        ).grid(row=2, column=0, sticky="w")
 
-        source_row = ttk.Frame(self)
-        source_row.grid(row=2, column=0, sticky="ew")
+        source_row = ttk.Frame(self, padding=(16, 13), style="Card.TFrame")
+        source_row.grid(row=1, column=0, sticky="ew", pady=(0, 12))
         source_row.columnconfigure(0, weight=1)
-        ttk.Entry(source_row, textvariable=self.source_var).grid(
-            row=0, column=0, sticky="ew", padx=(0, 8)
-        )
+        ttk.Label(
+            source_row,
+            text="Selecione a origem dos documentos",
+            style="SectionTitle.TLabel",
+        ).grid(row=0, column=0, columnspan=4, sticky="w")
+        ttk.Label(
+            source_row,
+            text=(
+                "Escolha um arquivo ZIP ou uma pasta. "
+                "A análise começará automaticamente."
+            ),
+            style="Caption.TLabel",
+        ).grid(row=1, column=0, columnspan=4, sticky="w", pady=(2, 10))
+        ttk.Entry(
+            source_row,
+            textvariable=self.source_var,
+            style="Modern.TEntry",
+        ).grid(row=2, column=0, sticky="ew", padx=(0, 10))
         self.zip_button = ttk.Button(
             source_row,
-            text="Escolher ZIP",
+            text="Selecionar ZIP",
             command=self.choose_zip,
+            style="Secondary.TButton",
         )
-        self.zip_button.grid(row=0, column=1, padx=(0, 8))
+        self.zip_button.grid(row=2, column=1, padx=(0, 8))
         self.folder_button = ttk.Button(
             source_row,
-            text="Escolher pasta",
+            text="Selecionar pasta",
             command=self.choose_folder,
+            style="Secondary.TButton",
         )
-        self.folder_button.grid(row=0, column=2)
-
-        actions = ttk.Frame(self)
-        actions.grid(row=3, column=0, sticky="ew", pady=10)
-        actions.columnconfigure(0, weight=1)
+        self.folder_button.grid(row=2, column=2, padx=(0, 8))
         self.analyze_button = ttk.Button(
-            actions,
-            text="Analisar PDFs",
+            source_row,
+            text="Analisar documentos",
             command=self.start_analysis,
+            style="Primary.TButton",
         )
-        self.analyze_button.grid(row=0, column=1)
+        self.analyze_button.grid(row=2, column=3)
 
-        table_frame = ttk.Frame(self)
-        table_frame.grid(row=4, column=0, sticky="nsew")
+        table_card = ttk.Frame(self, padding=(14, 12), style="Card.TFrame")
+        table_card.grid(row=2, column=0, sticky="nsew")
+        table_card.columnconfigure(0, weight=1)
+        table_card.rowconfigure(1, weight=1)
+
+        table_header = ttk.Frame(table_card, style="CardInner.TFrame")
+        table_header.grid(row=0, column=0, sticky="ew", pady=(0, 9))
+        table_header.columnconfigure(0, weight=1)
+        ttk.Label(
+            table_header,
+            text="Prévia dos arquivos",
+            style="SectionTitle.TLabel",
+        ).grid(row=0, column=0, sticky="w")
+        ttk.Label(
+            table_header,
+            text="Confira os dados encontrados antes de gerar o resultado.",
+            style="Caption.TLabel",
+        ).grid(row=1, column=0, sticky="w", pady=(2, 0))
+
+        table_frame = ttk.Frame(table_card, style="CardInner.TFrame")
+        table_frame.grid(row=1, column=0, sticky="nsew")
         table_frame.columnconfigure(0, weight=1)
         table_frame.rowconfigure(0, weight=1)
-        self.tree = ttk.Treeview(table_frame, columns=columns, show="headings")
+        self.tree = ttk.Treeview(
+            table_frame,
+            columns=columns,
+            show="headings",
+            style="Modern.Treeview",
+        )
         for column in columns:
             self.tree.heading(column, text=headings[column])
             self.tree.column(column, width=widths[column], minwidth=100)
         self.tree.grid(row=0, column=0, sticky="nsew")
-        vertical = ttk.Scrollbar(table_frame, orient="vertical", command=self.tree.yview)
+        self.tree.tag_configure("even", background=SURFACE)
+        self.tree.tag_configure("odd", background="#F8FAFD")
+        self.tree.tag_configure(
+            "success",
+            background=GREEN_LIGHT,
+            foreground="#17633F",
+        )
+        self.tree.tag_configure(
+            "error",
+            background=ERROR_LIGHT,
+            foreground=ERROR,
+        )
+        self.tree.tag_configure(
+            "neutral",
+            background=BLUE_LIGHT,
+            foreground=NAVY,
+        )
+        vertical = ttk.Scrollbar(
+            table_frame,
+            orient="vertical",
+            command=self.tree.yview,
+            style="Modern.Vertical.TScrollbar",
+        )
         vertical.grid(row=0, column=1, sticky="ns")
         horizontal = ttk.Scrollbar(
             table_frame,
             orient="horizontal",
             command=self.tree.xview,
+            style="Modern.Horizontal.TScrollbar",
         )
         horizontal.grid(row=1, column=0, sticky="ew")
         self.tree.configure(
@@ -392,27 +723,35 @@ class ServicePanel(ttk.Frame):
             xscrollcommand=horizontal.set,
         )
 
-        bottom = ttk.Frame(self)
-        bottom.grid(row=5, column=0, sticky="ew", pady=(10, 0))
-        bottom.columnconfigure(0, weight=1)
-        ttk.Label(bottom, textvariable=self.status_var).grid(
-            row=0, column=0, sticky="w"
-        )
+        bottom = ttk.Frame(self, padding=(14, 10), style="Card.TFrame")
+        bottom.grid(row=3, column=0, sticky="ew", pady=(12, 0))
+        bottom.columnconfigure(1, weight=1)
+        ttk.Label(
+            bottom,
+            text="●",
+            style="StatusDot.TLabel",
+        ).grid(row=0, column=0, sticky="w", padx=(0, 8))
+        ttk.Label(
+            bottom,
+            textvariable=self.status_var,
+            style="Status.TLabel",
+        ).grid(row=0, column=1, sticky="w")
         self.progress = ttk.Progressbar(
             bottom,
             variable=self.progress_value,
             maximum=100,
-            length=180,
+            length=190,
+            style="Modern.Horizontal.TProgressbar",
         )
-        self.progress.grid(row=0, column=1, padx=10)
+        self.progress.grid(row=0, column=2, padx=12)
         self.output_button = ttk.Button(
             bottom,
             text="Gerar resultado",
             command=self.start_output,
             state="disabled",
+            style="Success.TButton",
         )
-        self.output_button.grid(row=0, column=2)
-
+        self.output_button.grid(row=0, column=3)
     def choose_zip(self) -> None:
         selected = filedialog.askopenfilename(
             title="Escolha o arquivo ZIP com os PDFs",
@@ -498,8 +837,17 @@ class ServicePanel(ttk.Frame):
 
     def refresh_tree(self) -> None:
         self._clear_tree()
-        for values in self.table_rows():
-            self.tree.insert("", "end", values=values)
+        for index, values in enumerate(self.table_rows()):
+            status = str(values[-1]).casefold() if values else ""
+            if status.startswith("erro"):
+                tag = "error"
+            elif status.startswith(("pronto", "renomeado")):
+                tag = "success"
+            elif status.startswith("já"):
+                tag = "neutral"
+            else:
+                tag = "even" if index % 2 == 0 else "odd"
+            self.tree.insert("", "end", values=values, tags=(tag,))
 
     def start_output(self) -> None:
         if not self.analysis or not self.ready_count():
@@ -622,6 +970,7 @@ class SituationPanel(ServicePanel):
                 "O nome da empresa ou pessoa é lido diretamente no relatório. "
                 "Este serviço não precisa de internet."
             ),
+            category="Leitura direta do PDF",
             columns=("current", "company", "new", "status"),
             headings={
                 "current": "Arquivo atual",
@@ -705,6 +1054,7 @@ class CertificatePanel(ServicePanel):
                 "O CNPJ é localizado no PDF ou no nome técnico do arquivo. "
                 "A primeira consulta de cada empresa requer internet."
             ),
+            category="Consulta pela razão social",
             columns=("current", "cnpj", "company", "new", "status"),
             headings={
                 "current": "Arquivo atual",
@@ -796,36 +1146,125 @@ class FacilitaFiscalApp:
                 self.root.iconbitmap(default=str(icon_path))
             except tk.TclError:
                 pass
-        self.root.geometry("1180x680")
-        self.root.minsize(860, 520)
+        self.root.geometry("1280x760")
+        self.root.minsize(980, 620)
+        self.root.configure(background=APP_BACKGROUND)
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(1, weight=1)
+        configure_visual_styles(self.root)
 
-        style = ttk.Style(self.root)
-        style.configure("TNotebook.Tab", padding=(18, 8), font=("Segoe UI", 10, "bold"))
+        header = tk.Frame(
+            self.root,
+            background=HEADER_BACKGROUND,
+            height=106,
+        )
+        header.grid(row=0, column=0, sticky="ew")
+        header.grid_propagate(False)
+        header.columnconfigure(1, weight=1)
 
-        outer = ttk.Frame(self.root, padding=(12, 10))
-        outer.pack(fill="both", expand=True)
-        outer.columnconfigure(0, weight=1)
-        outer.rowconfigure(2, weight=1)
+        self.brand_icon: tk.PhotoImage | None = None
+        logo_path = resource_path("assets/facilita_fiscal_icon.png")
+        if logo_path.exists():
+            try:
+                original = tk.PhotoImage(file=str(logo_path))
+                scale = max(1, original.width() // 58)
+                self.brand_icon = original.subsample(scale, scale)
+            except tk.TclError:
+                self.brand_icon = None
 
-        ttk.Label(
-            outer,
+        if self.brand_icon:
+            tk.Label(
+                header,
+                image=self.brand_icon,
+                background=HEADER_BACKGROUND,
+                borderwidth=0,
+            ).grid(
+                row=0,
+                column=0,
+                rowspan=2,
+                padx=(24, 14),
+                pady=18,
+            )
+        else:
+            tk.Label(
+                header,
+                text="F",
+                background=GREEN,
+                foreground="#FFFFFF",
+                font=("Segoe UI", 22, "bold"),
+                padx=15,
+                pady=7,
+            ).grid(
+                row=0,
+                column=0,
+                rowspan=2,
+                padx=(24, 14),
+                pady=18,
+            )
+
+        tk.Label(
+            header,
             text="Facilita Fiscal",
-            font=("Segoe UI", 17, "bold"),
-        ).grid(row=0, column=0, sticky="w")
-        ttk.Label(
-            outer,
-            text="Escolha o serviço e depois selecione um ZIP ou uma pasta de PDFs.",
-        ).grid(row=1, column=0, sticky="w", pady=(2, 8))
+            background=HEADER_BACKGROUND,
+            foreground="#FFFFFF",
+            font=("Segoe UI", 21, "bold"),
+        ).grid(row=0, column=1, sticky="sw", pady=(19, 0))
+        tk.Label(
+            header,
+            text="Automação para documentos fiscais",
+            background=HEADER_BACKGROUND,
+            foreground="#AFC0DA",
+            font=("Segoe UI", 10),
+        ).grid(row=1, column=1, sticky="nw", pady=(1, 20))
 
-        notebook = ttk.Notebook(outer)
-        notebook.grid(row=2, column=0, sticky="nsew")
-        situation_panel = SituationPanel(notebook)
-        certificate_panel = CertificatePanel(notebook)
-        installment_panel = InstallmentPanel(notebook)
-        notebook.add(situation_panel, text="Situação Fiscal")
-        notebook.add(certificate_panel, text="Certidões Estaduais")
-        notebook.add(installment_panel, text="Parcelamentos (DARF/DAS)")
+        header_message = tk.Frame(
+            header,
+            background=HEADER_CARD,
+            highlightbackground="#1B3E70",
+            highlightthickness=1,
+        )
+        header_message.grid(
+            row=0,
+            column=2,
+            rowspan=2,
+            padx=(18, 24),
+            pady=22,
+        )
+        tk.Label(
+            header_message,
+            text="ORGANIZAÇÃO FISCAL",
+            background=HEADER_CARD,
+            foreground="#69D7A7",
+            font=("Segoe UI", 9, "bold"),
+        ).pack(anchor="w", padx=16, pady=(10, 1))
+        tk.Label(
+            header_message,
+            text="Escolha um serviço e deixe o sistema cuidar dos arquivos.",
+            background=HEADER_CARD,
+            foreground="#E7EEF8",
+            font=("Segoe UI", 9),
+        ).pack(anchor="w", padx=16, pady=(0, 10))
 
+        outer = ttk.Frame(
+            self.root,
+            padding=(18, 14, 18, 18),
+            style="App.TFrame",
+        )
+        outer.grid(row=1, column=0, sticky="nsew")
+        outer.columnconfigure(0, weight=1)
+        outer.rowconfigure(0, weight=1)
+
+        self.notebook = ttk.Notebook(outer, style="App.TNotebook")
+        self.notebook.grid(row=0, column=0, sticky="nsew")
+        self.situation_panel = SituationPanel(self.notebook)
+        self.certificate_panel = CertificatePanel(self.notebook)
+        self.installment_panel = InstallmentPanel(self.notebook)
+        self.notebook.add(self.situation_panel, text="Situação Fiscal")
+        self.notebook.add(self.certificate_panel, text="Certidões Estaduais")
+        self.notebook.add(
+            self.installment_panel,
+            text="Parcelamentos (DARF/DAS)",
+        )
     def run(self) -> None:
         self.root.mainloop()
 

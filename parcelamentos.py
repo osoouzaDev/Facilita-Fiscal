@@ -491,6 +491,7 @@ def create_installment_panel_class(base_panel: type) -> type:
                     "O sistema diferencia DARF e DAS automaticamente e inclui parcela e "
                     "vencimento no novo nome. Não precisa de internet."
                 ),
+                category="Reconhecimento automático",
                 columns=(
                     "current",
                     "type",

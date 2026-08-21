@@ -5,7 +5,10 @@ a = Analysis(
     ["facilita_fiscal.py"],
     pathex=[],
     binaries=[],
-    datas=[("assets/facilita_fiscal_icon.ico", "assets")],
+    datas=[
+        ("assets/facilita_fiscal_icon.ico", "assets"),
+        ("assets/facilita_fiscal_icon.png", "assets"),
+    ],
     hiddenimports=[
         "pypdf",
         "tkinter",
